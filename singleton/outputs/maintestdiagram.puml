@@ -1,0 +1,71 @@
+@startuml
+package com.iluwatar.singleton {
+  class App {
+    - LOGGER : Logger {static}
+    + App()
+    + main(args : String[]) {static}
+  }
+  class AppTest {
+    + AppTest()
+    + test()
+  }
+  enum EnumIvoryTower {
+    + INSTANCE {static}
+    + toString() : String
+    + valueOf(name : String) : EnumIvoryTower {static}
+    + values() : EnumIvoryTower[] {static}
+  }
+  class InitializingOnDemandHolderIdiom {
+    - InitializingOnDemandHolderIdiom()
+    + getInstance() : InitializingOnDemandHolderIdiom {static}
+  }
+  -class HelperHolder {
+    - INSTANCE : InitializingOnDemandHolderIdiom {static}
+    - HelperHolder()
+  }
+  class InitializingOnDemandHolderIdiomTest {
+    + InitializingOnDemandHolderIdiomTest()
+  }
+  class IvoryTower {
+    - INSTANCE : IvoryTower {static}
+    - IvoryTower()
+    + getInstance() : IvoryTower {static}
+  }
+  class IvoryTowerTest {
+    + IvoryTowerTest()
+  }
+  abstract class SingletonTest<S> {
+    - singletonInstanceMethod : Supplier<S>
+    + SingletonTest<S>(singletonInstanceMethod : Supplier<S>)
+    + testMultipleCallsReturnTheSameObjectInDifferentThreads()
+    + testMultipleCallsReturnTheSameObjectInSameThread()
+  }
+  class ThreadSafeDoubleCheckLocking {
+    - flag : boolean {static}
+    - instance : ThreadSafeDoubleCheckLocking {static}
+    - ThreadSafeDoubleCheckLocking()
+    + getInstance() : ThreadSafeDoubleCheckLocking {static}
+  }
+  class ThreadSafeDoubleCheckLockingTest {
+    + ThreadSafeDoubleCheckLockingTest()
+    + testCreatingNewInstanceByRefection()
+  }
+  class ThreadSafeLazyLoadedIvoryTower {
+    - instance : ThreadSafeLazyLoadedIvoryTower {static}
+    - ThreadSafeLazyLoadedIvoryTower()
+    + getInstance() : ThreadSafeLazyLoadedIvoryTower {static}
+  }
+  class ThreadSafeLazyLoadedIvoryTowerTest {
+    + ThreadSafeLazyLoadedIvoryTowerTest()
+  }
+}
+IvoryTower -->  "-INSTANCE" IvoryTower
+ThreadSafeDoubleCheckLocking -->  "-instance" ThreadSafeDoubleCheckLocking
+ThreadSafeLazyLoadedIvoryTower -->  "-instance" ThreadSafeLazyLoadedIvoryTower
+HelperHolder ..+ InitializingOnDemandHolderIdiom
+HelperHolder -->  "-INSTANCE" InitializingOnDemandHolderIdiom
+InitializingOnDemandHolderIdiomTest --|> SingletonTest 
+IvoryTowerTest --|> SingletonTest 
+ThreadSafeDoubleCheckLockingTest --|> SingletonTest 
+ThreadSafeLazyLoadedIvoryTowerTest --|> SingletonTest 
+@enduml

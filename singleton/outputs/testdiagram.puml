@@ -1,0 +1,31 @@
+@startuml
+package com.iluwatar.singleton {
+  class AppTest {
+    + AppTest()
+    + test()
+  }
+  class InitializingOnDemandHolderIdiomTest {
+    + InitializingOnDemandHolderIdiomTest()
+  }
+  class IvoryTowerTest {
+    + IvoryTowerTest()
+  }
+  abstract class SingletonTest<S> {
+    - singletonInstanceMethod : Supplier<S>
+    + SingletonTest<S>(singletonInstanceMethod : Supplier<S>)
+    + testMultipleCallsReturnTheSameObjectInDifferentThreads()
+    + testMultipleCallsReturnTheSameObjectInSameThread()
+  }
+  class ThreadSafeDoubleCheckLockingTest {
+    + ThreadSafeDoubleCheckLockingTest()
+    + testCreatingNewInstanceByRefection()
+  }
+  class ThreadSafeLazyLoadedIvoryTowerTest {
+    + ThreadSafeLazyLoadedIvoryTowerTest()
+  }
+}
+InitializingOnDemandHolderIdiomTest --|> SingletonTest 
+IvoryTowerTest --|> SingletonTest 
+ThreadSafeDoubleCheckLockingTest --|> SingletonTest 
+ThreadSafeLazyLoadedIvoryTowerTest --|> SingletonTest 
+@enduml

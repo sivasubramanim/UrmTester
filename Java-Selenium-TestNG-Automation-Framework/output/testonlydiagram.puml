@@ -1,0 +1,59 @@
+@startuml
+package com.autoframework.suite.base {
+  abstract class PageBase {
+    # driver : WebDriver
+    + log : Logger
+    + PageBase(driver : WebDriver)
+    + pressEnter()
+    + wait(timeInSeconds : int) {static}
+  }
+  abstract class TestBase {
+    + config : Properties {static}
+    + data : Properties {static}
+    + driver : WebDriver {static}
+    + env : Properties {static}
+    - ip : FileInputStream {static}
+    - isInitalized : boolean {static}
+    + log : Logger {static}
+    + wait : WebDriverWait {static}
+    # TestBase()
+    # assertStrings(actual : String, expected : String)
+    # getPropertyValue(PropertyKey : String) : String {static}
+    # getScreenshot()
+    # getScreenshotSavePath() : String
+    - initConfig() {static}
+    - initDriver() {static}
+    - initLogs() {static}
+    + quitDriver() {static}
+    + tearDown()
+  }
+}
+package com.autoframework.suite.sanitySuite {
+  class TestCase_1_GoogleSearch {
+    ~ obj_google_search : Syn_google_search
+    + TestCase_1_GoogleSearch()
+    + click_first_search_option()
+    + open_url()
+  }
+}
+package com.autoframework.suite.pages {
+  class Syn_google_search {
+    ~ driver : WebDriver
+    ~ searchBox : WebElement
+    ~ searchFirstOption : WebElement
+    ~ searchFirstOption_old : WebElement
+    + Syn_google_search(driver : WebDriver)
+    + click_on_first_search_option()
+    + enter_text(Search_text : String)
+    + get_first_option() : String
+    + search_by_first_option(text_to_search : String)
+    + select_first_option()
+  }
+}
+Timeouts ..+ WebDriver
+TestCase_1_GoogleSearch -->  "-obj_google_search" Syn_google_search
+Window ..+ WebDriver
+Options ..+ WebDriver
+Syn_google_search --|> PageBase 
+TestCase_1_GoogleSearch --|> TestBase 
+@enduml
